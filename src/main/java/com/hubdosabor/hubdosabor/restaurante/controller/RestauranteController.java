@@ -25,12 +25,11 @@ public class RestauranteController {
     }
 
     @GetMapping
-    public List<RestauranteResponse> getAllRestaurantes() {
+    public ResponseEntity<List<RestauranteResponse>> getAllRestaurantes() {
         List<Restaurante> restaurante = restauranteService.getAllRestaurante();
-
-        return restaurante.stream()
+        return ResponseEntity.ok(restaurante.stream()
                 .map(restauranteMapper::toDTO)
-                .toList();
+                .toList());
     }
 
 }
