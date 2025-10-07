@@ -1,6 +1,6 @@
 package com.hubdosabor.hubdosabor.usuarios.service;
 
-import com.hubdosabor.hubdosabor.usuarios.dto.request.UsuarioRequest;
+import com.hubdosabor.hubdosabor.usuarios.dto.request.RegistroRequest;
 import com.hubdosabor.hubdosabor.usuarios.model.Usuario;
 import com.hubdosabor.hubdosabor.usuarios.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +14,7 @@ public class UsuarioServiceImpl implements RegistrarService{
     private final UsuarioRepository usuarioRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public void registrarUsuario(UsuarioRequest request) {
+    public void registrarUsuario(RegistroRequest request) {
         if (usuarioRepository.findByEmail(request.email()).isPresent()) {
             throw new IllegalStateException("E-mail já existe");
         }
