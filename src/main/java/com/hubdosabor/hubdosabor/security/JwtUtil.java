@@ -1,4 +1,4 @@
-package com.hubdosabor.hubdosabor.usuarios.security;
+package com.hubdosabor.hubdosabor.security;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

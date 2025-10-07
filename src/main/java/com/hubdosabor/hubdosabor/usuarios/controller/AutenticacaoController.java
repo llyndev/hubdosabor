@@ -3,7 +3,7 @@ package com.hubdosabor.hubdosabor.usuarios.controller;
 import com.hubdosabor.hubdosabor.usuarios.dto.request.AutenticacaoRequest;
 import com.hubdosabor.hubdosabor.usuarios.dto.request.RegistroRequest;
 import com.hubdosabor.hubdosabor.usuarios.dto.response.AutenticacaoResponse;
-import com.hubdosabor.hubdosabor.usuarios.security.JwtUtil;
+import com.hubdosabor.hubdosabor.security.JwtUtil;
 import com.hubdosabor.hubdosabor.usuarios.service.RegistrarService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

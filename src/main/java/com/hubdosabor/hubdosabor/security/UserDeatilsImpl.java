@@ -1,4 +1,4 @@
-package com.hubdosabor.hubdosabor.usuarios.security;
+package com.hubdosabor.hubdosabor.security;
 
 import com.hubdosabor.hubdosabor.usuarios.model.Usuario;
 import org.springframework.security.core.GrantedAuthority;
