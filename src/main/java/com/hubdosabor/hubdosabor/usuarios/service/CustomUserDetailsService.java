@@ -2,7 +2,7 @@ package com.hubdosabor.hubdosabor.usuarios.service;
 
 import com.hubdosabor.hubdosabor.usuarios.model.Usuario;
 import com.hubdosabor.hubdosabor.usuarios.repository.UsuarioRepository;
-import com.hubdosabor.hubdosabor.usuarios.security.UserDeatilsImpl;
+import com.hubdosabor.hubdosabor.security.UserDeatilsImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

@@ -1,4 +1,4 @@
-package com.hubdosabor.hubdosabor.usuarios.security;
+package com.hubdosabor.hubdosabor.security;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -36,7 +36,8 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                        .requestMatchers("/registrar", "/logar").permitAll()
+                        .requestMatchers("/auth/registrar", "/auth/logar").permitAll()
+                        .requestMatchers("/usuario").permitAll()
 
                 )
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
