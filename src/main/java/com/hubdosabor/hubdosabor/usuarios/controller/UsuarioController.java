@@ -5,6 +5,7 @@ import com.hubdosabor.hubdosabor.usuarios.mapper.UsuarioMapper;
 import com.hubdosabor.hubdosabor.usuarios.model.Usuario;
 import com.hubdosabor.hubdosabor.usuarios.service.UsuarioService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,15 +22,15 @@ public class UsuarioController {
     private final UsuarioMapper usuarioMapper;
 
     @GetMapping
-    public List<UsuarioResponse> getAll() {
+    public ResponseEntity<List<UsuarioResponse>> getAll() {
         List<Usuario> usuario = usuarioService.getAll();
-        return usuario.stream()
+        return ResponseEntity.ok(usuario.stream()
                 .map(usuarioMapper::toDTO)
-                .toList();
+                .toList());
     }
 
     @GetMapping("/{id}")
-    public UsuarioResponse getById(@PathVariable Long id) {
-        return usuarioService.getById(id);
+    public ResponseEntity<UsuarioResponse> getById(@PathVariable Long id) {
+        return ResponseEntity.ok(usuarioService.getById(id));
     }
 }
