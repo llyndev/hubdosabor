@@ -1,4 +1,4 @@
-package com.hubdosabor.hubdosabor.security;
+package com.hubdosabor.hubdosabor.config.security;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -35,9 +35,14 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
+
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                        .requestMatchers("/registrar", "/logar").permitAll()
-                        .requestMatchers("/restaurante").permitAll()
+
+                        .requestMatchers("/auth/register", "/auth/login").permitAll()
+
+                        .requestMatchers("/restaurant", "restaurant/**").permitAll()
+
+                        .requestMatchers("/users", "/users/**").permitAll()
 
                 )
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
