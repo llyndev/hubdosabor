@@ -1,5 +1,6 @@
 package com.hubdosabor.hubdosabor.users.model;
 
+import com.hubdosabor.hubdosabor.address.model.Address;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -23,6 +24,9 @@ public class User {
 
     @Column(name = "email", nullable = false)
     private String email;
+
+    @Column(name = "address")
+    private Address address;
 
     @Column(name = "telephone", nullable = false)
     private String telephone;
