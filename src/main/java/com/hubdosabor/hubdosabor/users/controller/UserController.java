@@ -1,8 +1,10 @@
 package com.hubdosabor.hubdosabor.users.controller;
 
+import com.hubdosabor.hubdosabor.address.dto.response.CepResponse;
 import com.hubdosabor.hubdosabor.users.dto.response.UserResponse;
 import com.hubdosabor.hubdosabor.users.mapper.UserMapper;
 import com.hubdosabor.hubdosabor.users.model.User;
+import com.hubdosabor.hubdosabor.address.service.CepService;
 import com.hubdosabor.hubdosabor.users.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +22,7 @@ public class UserController {
 
     private final UserService userService;
     private final UserMapper userMapper;
+    private final CepService cepService;
 
     @GetMapping
     public ResponseEntity<List<UserResponse>> getAll() {
@@ -32,5 +35,12 @@ public class UserController {
     @GetMapping("/{id}")
     public ResponseEntity<UserResponse> getById(@PathVariable Long id) {
         return ResponseEntity.ok(userService.getById(id));
+    }
+
+    @GetMapping("/cep/{cep}")
+    public ResponseEntity<CepResponse> getCep(@PathVariable String cep) {
+        CepResponse cepResponse = cepService.getCep(cep);
+
+        return ResponseEntity.ok(cepResponse);
     }
 }
