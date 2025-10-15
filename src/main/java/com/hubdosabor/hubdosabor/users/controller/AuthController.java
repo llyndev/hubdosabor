@@ -1,10 +1,13 @@
 package com.hubdosabor.hubdosabor.users.controller;
 
+import com.hubdosabor.hubdosabor.config.security.UserDeatilsImpl;
 import com.hubdosabor.hubdosabor.users.dto.request.AuthRequest;
 import com.hubdosabor.hubdosabor.users.dto.request.RegisterRequest;
 import com.hubdosabor.hubdosabor.users.dto.response.AuthResponse;
 import com.hubdosabor.hubdosabor.config.security.JwtUtil;
+import com.hubdosabor.hubdosabor.users.dto.response.UserResponse;
 import com.hubdosabor.hubdosabor.users.service.RegisterService;
+import com.hubdosabor.hubdosabor.users.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -12,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,6 +27,7 @@ public class AuthController {
     private final RegisterService registerService;
     private final AuthenticationManager authenticationManager;
     private final JwtUtil jwtUtil;
+    private final UserService userService;
 
     @PostMapping("/login")
     public ResponseEntity<AuthResponse> login(@RequestBody AuthRequest request) {
@@ -43,5 +48,11 @@ public class AuthController {
 
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body("User registered sucessfully!");
+    }
+
+    @GetMapping("/me")
+    public ResponseEntity<UserResponse> getMe(@AuthenticationPrincipal UserDeatilsImpl userDeatils) {
+        UserResponse user = userService.getMe(userDeatils);
+        return ResponseEntity.ok(user);
     }
 }
