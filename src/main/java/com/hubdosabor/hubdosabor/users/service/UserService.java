@@ -1,5 +1,7 @@
 package com.hubdosabor.hubdosabor.users.service;
 
+import com.hubdosabor.hubdosabor.config.exception.custom.UnauthorizedException;
+import com.hubdosabor.hubdosabor.config.security.UserDeatilsImpl;
 import com.hubdosabor.hubdosabor.users.dto.response.UserResponse;
 import com.hubdosabor.hubdosabor.users.mapper.UserMapper;
 import com.hubdosabor.hubdosabor.users.model.User;
@@ -26,5 +28,15 @@ public class UserService {
         return userRepository.findById(id)
                 .map(userMapper::toDTO)
                 .orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
+    }
+
+    public UserResponse getMe(UserDeatilsImpl userDeatils) {
+        if (userDeatils == null) {
+            throw new UnauthorizedException("Unauthorized User");
+        }
+
+        User user = userDeatils.user();
+
+        return userMapper.toDTO(user);
     }
 }
