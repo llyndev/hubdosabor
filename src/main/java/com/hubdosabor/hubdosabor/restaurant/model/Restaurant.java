@@ -1,5 +1,6 @@
 package com.hubdosabor.hubdosabor.restaurant.model;
 
+import com.hubdosabor.hubdosabor.address.model.Address;
 import jakarta.persistence.*;
 import lombok.*;
 
