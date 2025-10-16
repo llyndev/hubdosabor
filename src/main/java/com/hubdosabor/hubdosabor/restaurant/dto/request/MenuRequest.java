@@ -1,9 +1,10 @@
 package com.hubdosabor.hubdosabor.restaurant.dto.request;
 
-public record RestaurantRequest(
+import java.math.BigDecimal;
+
+public record MenuRequest(
         String name,
         String description,
-        String cep,
-        String number
+        BigDecimal price
 ) {
 }

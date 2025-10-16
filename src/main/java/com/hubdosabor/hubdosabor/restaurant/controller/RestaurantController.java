@@ -1,12 +1,12 @@
 package com.hubdosabor.hubdosabor.restaurant.controller;
 
+import com.hubdosabor.hubdosabor.config.security.UserDeatilsImpl;
 import com.hubdosabor.hubdosabor.restaurant.dto.request.RestaurantRequest;
 import com.hubdosabor.hubdosabor.restaurant.dto.response.RestaurantResponse;
-import com.hubdosabor.hubdosabor.restaurant.mapper.RestaurantMapper;
-import com.hubdosabor.hubdosabor.restaurant.model.Restaurant;
 import com.hubdosabor.hubdosabor.restaurant.service.RestaurantService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,19 +17,20 @@ import java.util.List;
 public class RestaurantController {
 
     private final RestaurantService restaurantService;
-    private final RestaurantMapper restaurantMapper;
 
     @PostMapping
-    public ResponseEntity<RestaurantResponse> create(@RequestBody RestaurantRequest request) {
-        return ResponseEntity.ok(restaurantService.create(request));
+    public ResponseEntity<RestaurantResponse> create(@RequestBody RestaurantRequest request, @AuthenticationPrincipal UserDeatilsImpl userDeatils) {
+        return ResponseEntity.ok(restaurantService.create(request, userDeatils.getUsername()));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<RestaurantResponse> getById(@PathVariable Long id) {
+        return ResponseEntity.ok(restaurantService.findById(id));
     }
 
     @GetMapping
     public ResponseEntity<List<RestaurantResponse>> getAll() {
-        List<Restaurant> restaurante = restaurantService.getAll();
-        return ResponseEntity.ok(restaurante.stream()
-                .map(restaurantMapper::toDTO)
-                .toList());
+        return ResponseEntity.ok(restaurantService.getAll());
     }
 
     @PutMapping("/{id}")
