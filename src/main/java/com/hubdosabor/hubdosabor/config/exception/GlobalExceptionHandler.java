@@ -1,5 +1,6 @@
 package com.hubdosabor.hubdosabor.config.exception;
 
+import com.hubdosabor.hubdosabor.config.exception.custom.AccessDeniedException;
 import com.hubdosabor.hubdosabor.config.exception.custom.ResourceNotFoundException;
 import com.hubdosabor.hubdosabor.config.exception.custom.UnauthorizedException;
 import org.springframework.http.HttpStatus;
@@ -28,5 +29,11 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Map<String, String>> handleUnauthorized(UnauthorizedException exception) {
         Map<String, String> body = Map.of("Error", exception.getMessage());
         return new ResponseEntity<>(body, HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<Map<String, String>> handleAccessDanied(AccessDeniedException exception) {
+        Map<String, String> body = Map.of("Erro", exception.getMessage());
+        return new ResponseEntity<>(body, HttpStatus.FORBIDDEN);
     }
 }
