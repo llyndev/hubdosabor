@@ -1,28 +1,48 @@
 package com.hubdosabor.hubdosabor.restaurant.mapper;
 
-import com.hubdosabor.hubdosabor.address.dto.response.CepResponse;
-import com.hubdosabor.hubdosabor.address.model.Address;
-import com.hubdosabor.hubdosabor.address.service.CepService;
 import com.hubdosabor.hubdosabor.restaurant.dto.request.RestaurantRequest;
+import com.hubdosabor.hubdosabor.restaurant.dto.response.MenuResponse;
 import com.hubdosabor.hubdosabor.restaurant.dto.response.RestaurantResponse;
+import com.hubdosabor.hubdosabor.restaurant.model.Menu;
 import com.hubdosabor.hubdosabor.restaurant.model.Restaurant;
+import com.hubdosabor.hubdosabor.users.mapper.UserMapper;
 import org.springframework.stereotype.Component;
+
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class RestaurantMapper {
 
-    private final CepService cepService;
+    private final UserMapper userMapper;
+    private final MenuMapper menuMapper;
 
-    public RestaurantMapper(CepService cepService) {
-        this.cepService = cepService;
+    public RestaurantMapper(UserMapper userMapper, MenuMapper menuMapper) {
+        this.userMapper = userMapper;
+        this.menuMapper = menuMapper;
     }
 
     public RestaurantResponse toResponse(Restaurant restaurant) {
+
+        if (restaurant == null) {
+            return null;
+        }
+
+        List<Menu> menuList = restaurant.getMenus();
+
+        List<MenuResponse> menuResponsesList = menuList.stream()
+                    .map(menuMapper::toResponse)
+                    .toList();
+
         return new RestaurantResponse(
                 restaurant.getId(),
                 restaurant.getName(),
                 restaurant.getDescription(),
-                restaurant.getAddress()
+                restaurant.getAddress(),
+                menuResponsesList,
+                userMapper.toResponse(restaurant.getOwner())
         );
     }
 
@@ -31,16 +51,5 @@ public class RestaurantMapper {
         restaurant.setName(request.name());
         restaurant.setDescription(request.description());
         return restaurant;
-    }
-
-    public RestaurantResponse toDTO(Restaurant restaurant) {
-        if (restaurant == null) return null;
-
-        return new RestaurantResponse(
-                restaurant.getId(),
-                restaurant.getName(),
-                restaurant.getDescription(),
-                restaurant.getAddress()
-        );
     }
 }
